@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp"
+        android:background="#FFFFFF">
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="MyApp02MyOwnLinearLayout"
+            android:textColor="#673AB7"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/input1EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Jméno hráče"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/input2EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tým"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/input3EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Pozice"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/input4EditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="LSD"
+            android:padding="8dp"
+            android:layout_marginBottom="16dp" />
+
+        <Button
+            android:id="@+id/confirmButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Odeslat"
+            android:backgroundTint="#E91E63"
+            android:textColor="#FFFFFF"
+            android:layout_marginBottom="20dp" />
+
+        <EditText
+            android:id="@+id/outputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:hint="souhrn"
+            android:textColor="#FFFFFF"
+            android:background="#673AB7"
+            android:layout_marginBottom="16dp"  />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
