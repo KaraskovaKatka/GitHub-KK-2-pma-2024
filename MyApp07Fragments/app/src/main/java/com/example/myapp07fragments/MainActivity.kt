@@ -12,18 +12,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Přepínání na první fragment
-        binding.btnShowFirstFragment.setOnClickListener {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, FirstFragment())
-                .commit()
-        }
-
-        // Přepínání na druhý fragment
-        binding.btnShowSecondFragment.setOnClickListener {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, SecondFragment())
-                .commit()
-        }
+       
     }
 }
