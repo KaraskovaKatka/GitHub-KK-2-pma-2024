@@ -9,21 +9,16 @@
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/blue"
+        android:background="@color/pink"
         android:elevation="6dp"
-        android:title="Hlavní Aktivita"
+        android:title="Třetí Aktivita"
         android:titleTextColor="@android:color/white" />
 
-    <EditText
-        android:id="@+id/et_input"
+    <TextView
+        android:id="@+id/tv_final_data"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Zadejte text" />
-
-    <Button
-        android:id="@+id/btn_send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Odeslat na druhou aktivitu"
-        android:layout_gravity="center" />
+        android:text="Zde se zobrazí přijatá data"
+        android:textSize="16dp"
+        android:padding="16dp" />
 </LinearLayout>
