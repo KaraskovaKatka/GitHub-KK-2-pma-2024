@@ -9,10 +9,11 @@
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/blue"
+
         android:elevation="6dp"
         android:title="Hlavní Aktivita"
-        android:titleTextColor="@android:color/white" />
+        android:titleTextColor="@color/black"
+        android:background="@color/blue"/>
 
     <EditText
         android:id="@+id/et_input"
