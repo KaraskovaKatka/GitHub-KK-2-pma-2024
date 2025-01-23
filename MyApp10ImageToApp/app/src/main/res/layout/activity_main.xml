@@ -1,0 +1,76 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- ImageView pro zobrazení obrázku -->
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="250dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="16dp"
+        android:background="#E91E63"
+        />
+
+    <!-- Tlačítko pro nahrání obrázku -->
+    <Button
+        android:id="@+id/btnTakeImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Vybrat obrázek"
+        android:layout_below="@id/ivImage"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Tlačítko pro uložení obrázku do galerie -->
+    <Button
+        android:id="@+id/btnSaveImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Uložit obrázek"
+        android:layout_below="@id/btnTakeImage"
+        android:layout_marginTop="8dp"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Tlačítko pro sdílení obrázku -->
+    <Button
+        android:id="@+id/btnShareImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sdílet obrázek"
+        android:layout_below="@id/btnSaveImage"
+        android:layout_marginTop="8dp"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Tlačítko pro aplikaci grayscale filtru -->
+    <Button
+        android:id="@+id/btnApplyGrayscale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Aplikovat grayscale"
+        android:layout_below="@id/btnShareImage"
+        android:layout_marginTop="8dp"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Tlačítko pro otočení obrázku -->
+    <Button
+        android:id="@+id/btnRotateImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Otočit obrázek"
+        android:layout_below="@id/btnApplyGrayscale"
+        android:layout_marginTop="8dp"
+        android:layout_centerHorizontal="true" />
+
+    <!-- Tlačítko pro přidání samolepky -->
+    <Button
+        android:id="@+id/btnAddSticker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Přidat samolepku"
+        android:layout_below="@id/btnRotateImage"
+        android:layout_marginTop="8dp"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
