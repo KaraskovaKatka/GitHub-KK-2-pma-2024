@@ -140,7 +140,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
+    private fun deleteNote(note: Note) {
+        lifecycleScope.launch {
+            database.noteDao().delete(note)  // Smazání poznámky z databáze
+            loadNotes()  // Aktualizace seznamu poznámek
+        }
+    }
 
     private fun getSampleNotes(): List<Note> {
         // Testovací seznam poznámek
