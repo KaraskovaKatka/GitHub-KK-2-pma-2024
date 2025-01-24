@@ -19,20 +19,24 @@
         android:hint="Obsah poznámky"
         android:layout_marginTop="8dp" />
 
-    <!-- Label pro kategorii -->
+    <!-- Label pro Spinner -->
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/labelCategory"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Kategorie"
-        android:textStyle="bold"
+        android:textSize="16dp"
+        android:textColor="@color/green2"
         android:layout_marginTop="16dp" />
 
-    <!-- Spinner pro výběr jedné kategorie -->
+    <!-- Spinner pro výběr kategorie -->
     <Spinner
         android:id="@+id/spinnerCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="6dp"
+        android:spinnerMode="dropdown" />
+
 
     <!-- Label pro štítky -->
     <TextView
