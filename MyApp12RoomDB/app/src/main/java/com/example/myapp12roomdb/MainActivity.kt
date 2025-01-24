@@ -57,6 +57,27 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun clearDatabase() {
+        lifecycleScope.launch {
+            // Smazání všech poznámek
+            database.noteDao().deleteAllNotes()
+
+            // Smazání všech kategorií
+            database.categoryDao().deleteAllCategories()
+
+            // Resetování auto-increment hodnoty
+            resetAutoIncrement("note_table")
+            resetAutoIncrement("category_table")
+        }
+    }
+
+    private fun resetAutoIncrement(tableName: String) {
+        lifecycleScope.launch {
+            database.openHelper.writableDatabase.execSQL("DELETE FROM sqlite_sequence WHERE name = '$tableName'")
+        }
+    }
+
+
     private fun showAddNoteDialog() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_note, null)
         val titleEditText = dialogView.findViewById<EditText>(R.id.editTextTitle)

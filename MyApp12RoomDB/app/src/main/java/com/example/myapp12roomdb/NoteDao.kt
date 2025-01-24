@@ -26,4 +26,8 @@ interface NoteDao {
     @Query("SELECT * FROM note_table ORDER BY id DESC")
     fun getAllNotes(): Flow<List<Note>>
 
+    // Vymaže všechny záznamy z tabulky
+    @Query("DELETE FROM note_table")
+    suspend fun deleteAllNotes()
+
 }
