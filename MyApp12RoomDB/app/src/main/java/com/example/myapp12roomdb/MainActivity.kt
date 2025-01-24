@@ -75,8 +75,6 @@ class MainActivity : AppCompatActivity() {
         val spinnerCategory = dialogView.findViewById<Spinner>(R.id.spinnerCategory)
 
 
-
-
         val dialog = AlertDialog.Builder(this)
             .setTitle("Přidat poznámku")
             .setView(dialogView)
@@ -94,7 +92,7 @@ class MainActivity : AppCompatActivity() {
     private fun loadNotes() {
         lifecycleScope.launch {
             database.noteDao().getAllNotes().collect { notes ->
-                noteAdapter = NoteAdapter(notes)
+                noteAdapter = NoteAdapter(notes, onDeleteClick = {note -> deleteNote (note)})
                 binding.recyclerView.adapter = noteAdapter
             }
         }
