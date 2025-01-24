@@ -126,7 +126,12 @@ class MainActivity : AppCompatActivity() {
     private fun loadNotes() {
         lifecycleScope.launch {
             database.noteDao().getAllNotes().collect { notes ->
-                noteAdapter = NoteAdapter(notes, onDeleteClick = {note -> deleteNote (note)},onEditClick = {note -> editNote(note)})
+                noteAdapter = NoteAdapter(notes,
+                    onDeleteClick = {note -> deleteNote(note)},
+                    onEditClick = {note -> editNote(note)}
+                            lifecycleScope = lifecycleScope,  // Předáváme lifecycleScope
+                    database = database  // Předáváme databázi
+                           )
                 binding.recyclerView.adapter = noteAdapter
             }
         }
