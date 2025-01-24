@@ -49,6 +49,6 @@
             android:padding="8dp"
             android:src="@drawable/ic_delete"
             android:contentDescription="Smazat poznámku" />
-        
+
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

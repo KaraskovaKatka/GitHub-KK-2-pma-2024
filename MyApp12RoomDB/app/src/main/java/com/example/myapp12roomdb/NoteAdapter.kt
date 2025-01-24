@@ -1,11 +1,15 @@
 package com.example.myapp12roomdb
 
+import android.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp12roomdb.databinding.ItemNoteBinding
 
-class NoteAdapter(private val notes: List<Note>) : RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
+class NoteAdapter(
+    private val notes: List<Note>,
+    private val onDeleteClick: (Note) -> Unit // funkce pro mazání poznámky
+     ): RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val binding = ItemNoteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -19,10 +23,28 @@ class NoteAdapter(private val notes: List<Note>) : RecyclerView.Adapter<NoteAdap
         holder.bind(note)
     }
 
-    class NoteViewHolder(private val binding: ItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class NoteViewHolder(private val binding: ItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
+
         fun bind(note: Note) {
             binding.noteTitle.text = note.title
             binding.noteContentPreview.text = note.content
+
+            // Kliknutí na ikonu pro mazání
+            binding.iconDelete.setOnClickListener {
+                AlertDialog.Builder(itemView.context)
+                    .setTitle("Smazat poznámku")
+                    .setMessage("Opravdu chcete tuto poznámku smazat?")
+                    .setPositiveButton("Ano") { _, _ ->
+                        onDeleteClick(note)  // Vyvolání funkce pro mazání poznámky
+                    }
+                    .setNegativeButton("Ne", null)
+                    .show()
+            }
+
         }
     }
 }
+
+
+
+
