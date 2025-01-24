@@ -26,15 +26,17 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        title = "moje poznámky"
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // inicializace RecyclerView
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
-        noteAdapter = NoteAdapter(getSampleNotes())
+       //  noteAdapter = NoteAdapter(getSampleNotes()) dát do komentáře
         binding.recyclerView.adapter = noteAdapter
+
+
+        // noteAdapter = NoteAdapter(emptyList()) to samé - Inicializace s prázdným seznamem
+        // binding.recyclerView.adapter = noteAdapter
 
         // inicializace databáze
         database = NoteHubDatabaseInstance.getDatabase(this)
@@ -44,19 +46,16 @@ class MainActivity : AppCompatActivity() {
              insertDefaultTags()
 
 
-        // Inicializace s prázdným seznamem
-        noteAdapter = NoteAdapter(emptyList())
-        binding.recyclerView.adapter = noteAdapter
+        // insertSampleNotes() - Vložení testovacích dat komentář
 
+        // Načtení poznámek z databáze
+        loadNotes()
+
+        
         binding.fabAddNote.setOnClickListener {
             showAddNoteDialog()
         }
 
-        // Vložení testovacích dat
-        insertSampleNotes()
-
-        // Načtení poznámek z databáze
-        loadNotes()
     }
 
 
