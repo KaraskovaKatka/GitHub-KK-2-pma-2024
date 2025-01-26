@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class NoteAdapter(
     private val lifecycleScope: LifecycleCoroutineScope,  // Přidán lifecycleScope
-    private val database: NoteHubDatabase  // Přidána instance databáze
+    private val database: NoteHubDatabase,  // Přidána instance databáze
     private val notes: List<Note>,
     private val onDeleteClick: (Note) -> Unit, // funkce pro mazání poznámky
     private val onEditClick: (Note) -> Unit,    // Funkce pro editaci poznámky
@@ -61,8 +61,10 @@ class NoteAdapter(
                     .show()
             }
 
-
-
+            // Kliknutí na ikonu pro editaci
+            binding.iconEdit.setOnClickListener {
+                onEditClick(note)  // Vyvolání funkce pro editaci poznámky
+            }
         }
     }
 }

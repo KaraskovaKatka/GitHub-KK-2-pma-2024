@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="20dp">
 
     <EditText
         android:id="@+id/editTextTitle"
@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Obsah poznámky"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="10dp" />
 
     <!-- Label pro Spinner -->
     <TextView
@@ -36,23 +36,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:spinnerMode="dropdown" />
-
-
-    <!-- Label pro štítky -->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Štítky"
-        android:textStyle="bold"
-        android:layout_marginTop="16dp" />
-
-    <!-- EditText pro zobrazení a spuštění MultiChoice dialogu pro štítky -->
-    <EditText
-        android:id="@+id/editTextTags"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Vyberte štítky"
-        android:focusable="false"
-        android:layout_marginTop="8dp" />
 
 </LinearLayout>

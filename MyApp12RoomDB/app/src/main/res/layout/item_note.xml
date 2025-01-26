@@ -3,16 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginVertical="8dp"
-    android:padding="16dp"
-    app:cardElevation="4dp"
+    android:layout_marginVertical="10dp"
+    android:padding="20dp"
+    app:cardElevation="6dp"
     app:cardBackgroundColor="@color/green1">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="15dp">
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/note_title"
@@ -22,6 +22,15 @@
             android:textColor="@color/blue4"
             android:textSize="18sp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/note_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Kategorie"
+            android:textColor="@color/pink"
+            android:textSize="12sp"
+            android:layout_marginTop="4dp" />
 
         <TextView
             android:id="@+id/note_content_preview"
@@ -34,24 +43,10 @@
             android:textSize="14sp"
             android:layout_marginTop="4dp" />
 
-        <TextView
-            android:id="@+id/note_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Kategorie"
-            android:textColor="@color/pink"
-            android:textSize="12sp"
-            android:layout_marginTop="4dp" />
-
-    </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginLeft="290dp"
-        android:layout_marginTop="20dp"
-        >
+        android:orientation="horizontal" >
         <!-- Ikonka pro editaci -->
         <ImageView
             android:id="@+id/icon_edit"
@@ -69,5 +64,6 @@
             android:padding="8dp"
             android:src="@drawable/ic_delete"
             android:contentDescription="Smazat poznámku" />
+    </LinearLayout>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

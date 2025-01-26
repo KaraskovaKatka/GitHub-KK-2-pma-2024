@@ -6,6 +6,7 @@ import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Delete
 import kotlinx.coroutines.flow.Flow
+import com.example.myapp12roomdb.Tag
 
 @Dao
 interface TagDao {
@@ -16,7 +17,7 @@ interface TagDao {
 
     // Aktualizuje existující štítek
     @Update
-    suspend fun update(tag: Tag)
+    suspend fun update(tag: Tag) //provádí refresh databáze, velmi důležité mít zde!
 
     // Smaže zadaný štítek
     @Delete

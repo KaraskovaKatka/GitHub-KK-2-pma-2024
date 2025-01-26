@@ -5,7 +5,7 @@ import androidx.room.Room
 
 object NoteHubDatabaseInstance {
 
-    // Lazy inicializace instance databáze
+    //  inicializace instance databáze
     @Volatile
     private var INSTANCE: NoteHubDatabase? = null
 

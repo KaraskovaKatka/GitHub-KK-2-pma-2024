@@ -6,6 +6,7 @@ import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Delete
 import kotlinx.coroutines.flow.Flow
+import com.example.myapp12roomdb.CategoryDao
 
 @Dao
 interface CategoryDao {
@@ -34,8 +35,8 @@ interface CategoryDao {
     @Query("SELECT * FROM category_table WHERE id = :categoryId LIMIT 1")
     suspend fun getCategoryById(categoryId: Int): Category?
 
-    // Vymaže všechny záznamy z tabulky
-    @Query("DELETE FROM note_table")
-    suspend fun deleteAllNotes()
+    // vymaže všechny možnosti kategorií z tabulky
+    @Query("DELETE FROM category_table")
+    suspend fun deleteAllCategories()
 
 }

@@ -4,13 +4,12 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
-
-android {
-    namespace = "com.example.myapp014amynotehub"
+android{
+    namespace = "com.example.myapp12roomdb"
     compileSdk = 35
 
-    defaultConfig {
-        applicationId = "com.example.myapp014amynotehub"
+    defaultConfig{
+        applicationId = "com.example.myapp12roomdb"
         minSdk = 24
         targetSdk = 34
         versionCode = 1
@@ -18,7 +17,6 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -32,24 +30,20 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-    buildFeatures {
+        kotlinOptions{
+            jvmTarget = JavaVersion.VERSION_1_8.toString()
+        }
+    buildFeatures{
         viewBinding = true
     }
-
 }
 
 dependencies {
     val room_version = "2.6.1"
+
+    // Room dependencies
     implementation("androidx.room:room-runtime:$room_version")
-    // optional - Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:$room_version")
-
-
-    // If this project uses any Kotlin source, use Kotlin Symbol Processing (KSP)
-    // See [Add the KSP plugin to your project](https://developer.android.com/build/migrate-to-ksp#add-ksp)
+    implementation("androidx.room:room-ktx:$room_version") // Přidání room-ktx pro Coroutines
     ksp("androidx.room:room-compiler:$room_version")
 
     implementation(libs.androidx.core.ktx)
