@@ -11,21 +11,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_margin="16dp" />
+        android:layout_margin="16dp"
+        android:spinnerMode="dropdown" />
 
     <!-- Tlačítko pro řazení podle názvu -->
+
+    <!-- RecyclerView pro seznam poznámek -->
     <Button
         android:id="@+id/btnSortByName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/spinnerFilterCategory"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="76dp"
         android:layout_marginTop="16dp"
-        android:text="Řadit podle názvu"
+        android:layout_toEndOf="@id/spinnerFilterCategory"
         android:backgroundTint="@color/yellow"
-        android:textColor="@color/dark_red"/>
+        android:text="Řadit podle názvu"
+        android:textColor="@color/dark_red" />
 
-    <!-- RecyclerView pro seznam poznámek -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"

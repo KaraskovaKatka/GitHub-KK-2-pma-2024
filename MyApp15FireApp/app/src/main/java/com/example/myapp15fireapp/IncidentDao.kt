@@ -11,16 +11,13 @@ import kotlinx.coroutines.flow.Flow
 interface IncidentDao {
 
     // Vloží nový výjezd do databáze
-    @Insert
-    suspend fun insert(incident: Incident)
+    @Insert  suspend fun insert(incident: Incident)
 
     // Aktualizuje existující výjezd
-    @Update
-    suspend fun update(incident: Incident)
+    @Update  suspend fun update(incident: Incident)
 
     // Smaže zadaný výjezd
-    @Delete
-    suspend fun delete(incident: Incident)
+    @Delete  suspend fun delete(incident: Incident)
 
     // Načte všechny výjezdy a vrátí je jako Flow, které umožňuje pozorování změn
     @Query("SELECT * FROM incident_table ORDER BY id DESC")

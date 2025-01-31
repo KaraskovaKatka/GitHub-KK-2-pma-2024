@@ -11,7 +11,8 @@
         android:id="@+id/editTextTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Název zásahu" />
+        android:hint="Název výjezdu" />
+
 
     <EditText
         android:id="@+id/editTextContent"

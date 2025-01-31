@@ -10,5 +10,7 @@ data class Incident(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,  // ID poznámky, automaticky generované
     val title: String,  // Název poznámky
     val content: String,  // Obsah poznámky
-    val categoryId: Int? = null  // Volitelný odkaz na kategorii
+    val categoryId: Int? = null,  // Volitelný odkaz na kategorii
+
+
 )

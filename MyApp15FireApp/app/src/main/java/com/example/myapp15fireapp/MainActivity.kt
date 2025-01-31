@@ -1,6 +1,8 @@
 package com.example.myapp15fireapp
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -21,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var incidentAdapter: IncidentAdapter
     private lateinit var database: IncidentHubDatabase
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         val contentEditText = dialogView.findViewById<EditText>(R.id.editTextContent)
         val spinnerCategory = dialogView.findViewById<Spinner>(R.id.spinnerCategory)
 
+
         lifecycleScope.launch {
             val categories = database.categoryDao().getAllCategories().first()
             val categoryNames = categories.map { it.name }
@@ -61,6 +65,7 @@ class MainActivity : AppCompatActivity() {
             spinnerCategory.adapter = adapter
         }
 
+
         val dialog = AlertDialog.Builder(this)
             .setTitle("Přidat výjezd")
             .setView(dialogView)
@@ -68,6 +73,7 @@ class MainActivity : AppCompatActivity() {
                 val title = titleEditText.text.toString()
                 val content = contentEditText.text.toString()
                 val selectedCategory = spinnerCategory.selectedItem.toString()
+
 
                 lifecycleScope.launch {
                     val category = database.categoryDao().getCategoryByName(selectedCategory)
@@ -120,16 +126,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun insertSampleIncidents() {
-        lifecycleScope.launch {
-            val sampleIncidents = listOf(
-                Incident(title = "Výjezd 1", content = "Obsah první testovací poznámky"),
-                Incident(title = "Výjezd 2", content = "Obsah druhé testovací poznámky"),
-                Incident(title = "Výjezd 3", content = "Obsah třetí testovací poznámky")
-            )
-            sampleIncidents.forEach { database.incidentDao().insert(it) }
-        }
-    }
 
     private fun insertDefaultCategories() {
         lifecycleScope.launch {
@@ -141,6 +137,7 @@ class MainActivity : AppCompatActivity() {
                 "Záchrana osob a zvířat",
                 "Únik nebezpečných látek",
                 "Jiné")
+
             for (categoryName in defaultCategories) {
                 val existingCategory = database.categoryDao().getCategoryByName(categoryName)
                 if (existingCategory == null) {
@@ -242,7 +239,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupUI() {
         setupFilterSpinner()
-        setupSortButtons()
     }
 
     private fun setupFilterSpinner() {
@@ -255,21 +251,24 @@ class MainActivity : AppCompatActivity() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             binding.spinnerFilterCategory.adapter = adapter
 
+            // Nastavení onItemSelectedListener pro spinner
             binding.spinnerFilterCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    currentCategory = categoryNames[position]
-                    loadIncidents()
+                    currentCategory = categoryNames[position]  // Nastavení aktuální kategorie
+                    loadIncidents() // Načteme výjezdy na základě vybrané kategorie
                 }
 
-                override fun onNothingSelected(parent: AdapterView<*>?) {}
-            }
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    // Není třeba nic dělat, když není nic vybráno
+                }
+
         }
     }
 
-    private fun setupSortButtons() {
+    fun setupSortButtons() {
         binding.btnSortByName.setOnClickListener {
             isNameAscending = !isNameAscending
             loadIncidents()
         }
     }
-}
+}}
