@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:src="@drawable/icon_edit"
-                android:contentDescription="Upravit poznámku" />
+                android:contentDescription="Upravit zápis z výjezdu" />
 
             <!-- Ikonka pro mazání -->
             <ImageView

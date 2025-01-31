@@ -21,7 +21,9 @@
         android:layout_toEndOf="@id/spinnerFilterCategory"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:text="Řadit podle názvu" />
+        android:text="Řadit podle názvu"
+        android:backgroundTint="@color/yellow"
+        android:textColor="@color/dark_red"/>
 
     <!-- RecyclerView pro seznam poznámek -->
     <androidx.recyclerview.widget.RecyclerView
