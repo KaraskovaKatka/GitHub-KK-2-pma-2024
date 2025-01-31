@@ -23,12 +23,13 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var incidentAdapter: IncidentAdapter
     private lateinit var database: IncidentHubDatabase
+    private var isSortedByEvent = false  // Pro řízení, zda řadit podle události
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        title = "Moje výjezdy"
+        title = "Výjezdy"
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -101,20 +102,23 @@ class MainActivity : AppCompatActivity() {
             var incidents = if (currentCategory == "Vše") {
                 database.incidentDao().getAllIncidents().first()
             } else {
+                // Pokud je vybrána specifická kategorie
                 val category = database.categoryDao().getCategoryByName(currentCategory)
                 if (category != null) {
                     database.incidentDao().getIncidentsByCategoryId(category.id).first()
                 } else {
-                    emptyList()
+                    emptyList()  // Pokud není kategorie nalezena, vrátí prázdný seznam
                 }
             }
 
+            // Aplikujeme řazení podle názvu
             if (isNameAscending) {
                 incidents = incidents.sortedWith(compareBy { it.title?.lowercase() ?: "" })
             } else {
                 incidents = incidents.sortedWith(compareByDescending { it.title?.lowercase() ?: "" })
             }
 
+            // Aktualizace RecyclerView s novými výjezdy
             incidentAdapter = IncidentAdapter(
                 incidents = incidents,
                 onDeleteClick = { incident -> deleteIncident(incident) },
