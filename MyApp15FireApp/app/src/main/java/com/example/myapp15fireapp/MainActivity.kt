@@ -249,7 +249,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             val categories = database.categoryDao().getAllCategories().first()
             val categoryNames = categories.map { it.name }.toMutableList()
-            categoryNames.add(0, "Vše")
+            categoryNames.add(0, "Vše")  // Přidání "Vše" jako možnost pro zobrazení všech výjezdů
 
             val adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_spinner_item, categoryNames)
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -265,14 +265,14 @@ class MainActivity : AppCompatActivity() {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                     // Není třeba nic dělat, když není nic vybráno
                 }
-
+            }
         }
     }
 
-    fun setupSortButtons() {
-        binding.btnSortByName.setOnClickListener {
-            isNameAscending = !isNameAscending
-            loadIncidents()
+        fun setupSortButtons() {
+            binding.btnSortByName.setOnClickListener {
+                isNameAscending = !isNameAscending
+                loadIncidents()
+            }
         }
     }
-}}

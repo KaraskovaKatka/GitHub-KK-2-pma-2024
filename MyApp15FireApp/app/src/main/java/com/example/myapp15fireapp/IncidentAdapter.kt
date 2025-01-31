@@ -28,7 +28,7 @@ class IncidentAdapter(
         holder.bind(incident)
     }
 
-     inner class IncidentViewHolder(private val binding: ItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class IncidentViewHolder(private val binding: ItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(incident: Incident) {
             binding.noteTitle.text = incident.title
