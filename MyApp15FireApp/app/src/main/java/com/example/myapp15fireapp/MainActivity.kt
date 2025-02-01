@@ -1,7 +1,11 @@
 package com.example.myapp15fireapp
 
 import android.app.AlertDialog
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -61,9 +65,11 @@ class MainActivity : AppCompatActivity() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinnerCategory.adapter = adapter
         }
+        val title = SpannableString("Přidat výjezd")
+        title.setSpan(ForegroundColorSpan(Color.RED), 0, title.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
 
         val dialog = AlertDialog.Builder(this)
-            .setTitle("Přidat výjezd")
+            .setTitle(title)
             .setView(dialogView)
             .setPositiveButton("Přidat") { _, _ ->
                 val title = titleEditText.text.toString()
