@@ -11,6 +11,4 @@ data class Incident(
     val title: String,  // Název poznámky
     val content: String,  // Obsah poznámky
     val categoryId: Int? = null,  // Volitelný odkaz na kategorii
-
-
 )

@@ -1,8 +1,6 @@
 package com.example.myapp15fireapp
 
 import android.app.AlertDialog
-import android.app.DatePickerDialog
-import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -30,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         title = "Výjezdy"
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -57,7 +54,6 @@ class MainActivity : AppCompatActivity() {
         val contentEditText = dialogView.findViewById<EditText>(R.id.editTextContent)
         val spinnerCategory = dialogView.findViewById<Spinner>(R.id.spinnerCategory)
 
-
         lifecycleScope.launch {
             val categories = database.categoryDao().getAllCategories().first()
             val categoryNames = categories.map { it.name }
@@ -66,7 +62,6 @@ class MainActivity : AppCompatActivity() {
             spinnerCategory.adapter = adapter
         }
 
-
         val dialog = AlertDialog.Builder(this)
             .setTitle("Přidat výjezd")
             .setView(dialogView)
@@ -74,7 +69,6 @@ class MainActivity : AppCompatActivity() {
                 val title = titleEditText.text.toString()
                 val content = contentEditText.text.toString()
                 val selectedCategory = spinnerCategory.selectedItem.toString()
-
 
                 lifecycleScope.launch {
                     val category = database.categoryDao().getCategoryByName(selectedCategory)
@@ -110,14 +104,12 @@ class MainActivity : AppCompatActivity() {
                     emptyList()  // Pokud není kategorie nalezena, vrátí prázdný seznam
                 }
             }
-
             // Aplikujeme řazení podle názvu
             if (isNameAscending) {
                 incidents = incidents.sortedWith(compareBy { it.title?.lowercase() ?: "" })
             } else {
                 incidents = incidents.sortedWith(compareByDescending { it.title?.lowercase() ?: "" })
             }
-
             // Aktualizace RecyclerView s novými výjezdy
             incidentAdapter = IncidentAdapter(
                 incidents = incidents,
@@ -130,18 +122,22 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun insertDefaultCategories() {
         lifecycleScope.launch {
+            // Smaže všechny kategorie
             database.categoryDao().deleteAllCategories()
+
+            // Seznam výchozích kategorií
             val defaultCategories = listOf(
                 "Požár",
                 "Dopravní nehoda",
                 "Technická pomoc",
                 "Záchrana osob a zvířat",
                 "Únik nebezpečných látek",
-                "Jiné")
+                "Jiné"
+            )
 
+            // Vložení výchozích kategorií do databáze
             for (categoryName in defaultCategories) {
                 val existingCategory = database.categoryDao().getCategoryByName(categoryName)
                 if (existingCategory == null) {
@@ -157,26 +153,11 @@ class MainActivity : AppCompatActivity() {
             if (existingTags.isEmpty()) {
                 val defaultTags = listOf(
                     Tag(name = "Požár"),
-                    Tag(name = "Požár - popelnice, kontejner"),
-                    Tag(name = "Požár - odpad, ostatní"),
-                    Tag(name = "Požár - nízké budovy"),
-                    Tag(name = "Požár - průmyslové, zemědělské objekty,sklady"),
-                    Tag(name = "Požár - saze v komíně"),
-                    Tag(name = "Dopravní nehoda - úklid vozovky"),
-                    Tag(name = "Dopravní nehoda - uvolnění komunikace, odtažení"),
-                    Tag(name = "Dopravní nehoda - železniční"),
-                    Tag(name = "Dopravní nehoda - vyproštění osob"),
-                    Tag(name = "Dopravní nehoda - se zraněním"),
-                    Tag(name = "Technická pomoc - odstranění stromu"),
-                    Tag(name = "Technická pomoc - otevření uzavřených prostor"),
-                    Tag(name = "Technická pomoc - transport pacienta"),
-                    Tag(name = "Záchrana osob a zvířat - AED") ,
-                    Tag(name = "Záchrana osob a zvířat - uzavřené prostory") ,
-                    Tag(name = "Záchrana osob a zvířat - ostatní") ,
-                    Tag(name = "Planý poplach"),
-                    Tag(name = "Únik nebezpečných látek - do ovzduší"),
-                    Tag(name = "Únik nebezpečných látek - na pozemní komunikaci"),
-                    Tag(name = "Jiné - zatím neurčeno ")
+                    Tag(name = "Dopravní nehoda"),
+                    Tag(name = "Technická pomoc"),
+                    Tag(name = "Záchrana osob a zvířat"),
+                    Tag(name = "Únik nebezpečných látek"),
+                    Tag(name = "Jiné")
                 )
                 defaultTags.forEach { database.tagDao().insert(it) }
             }
@@ -243,6 +224,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupUI() {
         setupFilterSpinner()
+        setupSortButtons()
     }
 
     private fun setupFilterSpinner() {
@@ -269,10 +251,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-        fun setupSortButtons() {
-            binding.btnSortByName.setOnClickListener {
-                isNameAscending = !isNameAscending
-                loadIncidents()
-            }
+    fun setupSortButtons() {
+        binding.btnSortByName.setOnClickListener {
+            isNameAscending = !isNameAscending
+            loadIncidents()
+            binding.btnSortByName.text = if (isNameAscending) "Řadit podle názvu (a-z)" else "Řadit podle názvu (z-a)"
+
         }
     }
+}
