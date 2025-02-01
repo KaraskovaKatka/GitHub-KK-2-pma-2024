@@ -124,26 +124,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun insertDefaultCategories() {
         lifecycleScope.launch {
-            // Smaže všechny kategorie
-            database.categoryDao().deleteAllCategories()
+            database.categoryDao().deleteAllCategories() // Vymaže všechny kategorie
 
-            // Seznam výchozích kategorií
             val defaultCategories = listOf(
-                "Požár",
-                "Dopravní nehoda",
-                "Technická pomoc",
-                "Záchrana osob a zvířat",
-                "Únik nebezpečných látek",
-                "Jiné"
+                "Požár", "Dopravní nehoda", "Technická pomoc",
+                "Záchrana osob a zvířat", "Únik nebezpečných látek", "Jiné"
             )
 
-            // Vložení výchozích kategorií do databáze
             for (categoryName in defaultCategories) {
                 val existingCategory = database.categoryDao().getCategoryByName(categoryName)
                 if (existingCategory == null) {
                     database.categoryDao().insert(Category(name = categoryName))
                 }
             }
+
+            // Kontrola, kolik kategorií je v databázi
+            val categoryCount = database.categoryDao().getAllCategories().first().size
+            println("Počet kategorií v databázi: $categoryCount") // Pro ladění
         }
     }
 
@@ -227,29 +224,34 @@ class MainActivity : AppCompatActivity() {
         setupSortButtons()
     }
 
-    private fun setupFilterSpinner() {
-        lifecycleScope.launch {
-            val categories = database.categoryDao().getAllCategories().first()
-            val categoryNames = categories.map { it.name }.toMutableList()
-            categoryNames.add(0, "Vše")  // Přidání "Vše" jako možnost pro zobrazení všech výjezdů
+        private fun setupFilterSpinner() {
+            lifecycleScope.launch {
+                val categories = database.categoryDao().getAllCategories().first()
+                val categoryNames = categories.map { it.name }.toMutableList()
 
-            val adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_spinner_item, categoryNames)
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.spinnerFilterCategory.adapter = adapter
+                // Přidání "Vše" jako první položky
+                categoryNames.add(0, "Vše")
 
-            // Nastavení onItemSelectedListener pro spinner
-            binding.spinnerFilterCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    currentCategory = categoryNames[position]  // Nastavení aktuální kategorie
-                    loadIncidents() // Načteme výjezdy na základě vybrané kategorie
-                }
+                // Log načtených kategorií
+                println("Načtené kategorie: $categoryNames")
 
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    // Není třeba nic dělat, když není nic vybráno
+                val adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_spinner_item, categoryNames)
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                binding.spinnerFilterCategory.adapter = adapter
+
+                // Nastavení onItemSelectedListener pro Spinner
+                binding.spinnerFilterCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        currentCategory = categoryNames[position]
+                        loadIncidents() // Načteme výjezdy na základě vybrané kategorie
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
+                        // Nic neprováděj
+                    }
                 }
             }
         }
-    }
 
     fun setupSortButtons() {
         binding.btnSortByName.setOnClickListener {
