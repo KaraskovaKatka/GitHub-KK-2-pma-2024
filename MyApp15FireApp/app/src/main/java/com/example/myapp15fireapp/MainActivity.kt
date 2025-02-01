@@ -224,17 +224,17 @@ class MainActivity : AppCompatActivity() {
         setupSortButtons()
     }
 
-        private fun setupFilterSpinner() {
-            lifecycleScope.launch {
-                val categories = database.categoryDao().getAllCategories().first()
+    private fun setupFilterSpinner() {
+        lifecycleScope.launch {
+            // Načítáme kategorie pomocí collect z Flow
+            database.categoryDao().getAllCategories().collect { categories ->
                 val categoryNames = categories.map { it.name }.toMutableList()
+                categoryNames.add(0, "Vše")  // Přidání "Vše" jako první položky
 
-                // Přidání "Vše" jako první položky
-                categoryNames.add(0, "Vše")
-
-                // Log načtených kategorií
+                // Log pro ladění: zobrazení načtených kategorií
                 println("Načtené kategorie: $categoryNames")
 
+                // Nastavení adaptéru pro Spinner
                 val adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_spinner_item, categoryNames)
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 binding.spinnerFilterCategory.adapter = adapter
@@ -242,7 +242,7 @@ class MainActivity : AppCompatActivity() {
                 // Nastavení onItemSelectedListener pro Spinner
                 binding.spinnerFilterCategory.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                        currentCategory = categoryNames[position]
+                        currentCategory = categoryNames[position]  // Nastavení aktuální kategorie
                         loadIncidents() // Načteme výjezdy na základě vybrané kategorie
                     }
 
@@ -252,6 +252,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
 
     fun setupSortButtons() {
         binding.btnSortByName.setOnClickListener {
