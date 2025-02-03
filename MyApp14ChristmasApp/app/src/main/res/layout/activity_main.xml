@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <!-- Přepínač pro tmavý režim -->
+    <Switch
+        android:id="@+id/theme_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nechci se na to koukat za světla"
+        android:layout_margin="16dp"/>
+
+    <!-- Řádek pro tlačítka Reset a Sdílet -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+        <!-- Tlačítko Reset -->
+        <Button
+            android:id="@+id/reset_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Reset sušenek"
+            android:textSize="20sp"
+            android:backgroundTint="#F44336"
+            android:layout_marginEnd="10dp"/>
+
+        <!-- Tlačítko Sdílet -->
+        <Button
+            android:id="@+id/share_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sdílet sušenky"
+            android:backgroundTint="#4CAF50"/>
+    </LinearLayout>
+
+    <!-- Adventní kalendář -->
+    <GridLayout
+        android:id="@+id/calendar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnCount="4"
+        android:padding="16dp"
+        android:background="@color/green"/>
+
+</LinearLayout>
