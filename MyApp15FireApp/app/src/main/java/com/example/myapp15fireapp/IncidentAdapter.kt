@@ -9,61 +9,58 @@ import com.example.myapp15fireapp.databinding.ItemNoteBinding
 import kotlinx.coroutines.launch
 
 class IncidentAdapter(
-    private val lifecycleScope: LifecycleCoroutineScope,  // Přidán lifecycleScope
-    private val database: IncidentHubDatabase,  // Přidána instance databáze
-    private val incidents: List<Incident>,  // Seznam výjezdů místo poznámek
-    private val onDeleteClick: (Incident) -> Unit,  // Funkce pro mazání výjezdu
-    private val onEditClick: (Incident) -> Unit,    // Funkce pro editaci výjezdu
+    private val lifecycleScope: LifecycleCoroutineScope,
+    private val database: IncidentHubDatabase,
+    private val incidents: List<Incident>,
+    private val onDeleteClick: (Incident) -> Unit,
+    private val onEditClick: (Incident) -> Unit,
+
 ) : RecyclerView.Adapter<IncidentAdapter.IncidentViewHolder>() {
 
+    // Vytvoření ViewHolderu
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IncidentViewHolder {
         val binding = ItemNoteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return IncidentViewHolder(binding)
     }
 
-    override fun getItemCount() = incidents.size
+    // Nastavení počtu položek v seznamu
+    override fun getItemCount(): Int = incidents.size
 
+    // Připojení dat k ViewHolderu
     override fun onBindViewHolder(holder: IncidentViewHolder, position: Int) {
         val incident = incidents[position]
         holder.bind(incident)
     }
 
+    // Vnitřní třída ViewHolder
     inner class IncidentViewHolder(private val binding: ItemNoteBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(incident: Incident) {
             binding.noteTitle.text = incident.title
             binding.noteContentPreview.text = incident.content
+            binding.noteAddress.text = incident.location ?: "Adresa neuložena"
+            binding.noteDate.text = incident.date ?: "Datum neuvedeno"
+            binding.noteRatingBar.rating = incident.rating ?: 0f // OPRAVENO - místo `!!`
 
-            // Ověření, zda categoryId není null
+            // Ověření kategorie
             val categoryId = incident.categoryId
             if (categoryId != null) {
                 lifecycleScope.launch {
                     val category = database.categoryDao().getCategoryById(categoryId)
-                    if (category != null) {
-                        binding.noteCategory.text = category.name  // Zobrazíme název kategorie
-                    } else {
-                        binding.noteCategory.text = "Neznámá kategorie"
-                    }
+                    binding.noteCategory.text = category?.name ?: "Neznámá kategorie"
                 }
             } else {
-                binding.noteCategory.text = "Bez kategorie"  // Pokud není přiřazena žádná kategorie
+                binding.noteCategory.text = "Bez kategorie"
             }
 
-            // Kliknutí na ikonu pro mazání
+            // Nastavení kliknutí na mazání
             binding.iconDelete.setOnClickListener {
-                AlertDialog.Builder(itemView.context)
-                    .setTitle("Smazat výjezd")
-                    .setMessage("Opravdu chcete toto hlášení z výjezdu smazat?")
-                    .setPositiveButton("Ano") { _, _ ->
-                        onDeleteClick(incident)  // Vyvolání funkce pro mazání výjezdu
-                    }
-                    .setNegativeButton("Ne", null)
-                    .show()
+                onDeleteClick(incident)
             }
 
-            // Kliknutí na ikonu pro editaci
+            // Nastavení kliknutí na editaci
             binding.iconEdit.setOnClickListener {
-                onEditClick(incident)  // Vyvolání funkce pro editaci výjezdu
+                onEditClick(incident)
             }
         }
     }

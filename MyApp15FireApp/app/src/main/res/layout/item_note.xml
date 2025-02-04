@@ -15,6 +15,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- Název výjezdu -->
         <TextView
             android:id="@+id/note_title"
             android:layout_width="wrap_content"
@@ -24,15 +25,37 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <!-- Datum výjezdu -->
+        <TextView
+            android:id="@+id/noteDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Datum výjezdu"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="4dp" />
+
+        <!-- Adresa výjezdu -->
+        <TextView
+            android:id="@+id/note_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Adresa výjezdu"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:layout_marginTop="4dp" />
+
+        <!-- Typ zásahu -->
         <TextView
             android:id="@+id/note_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Typ výjezd"
+            android:text="Typ výjezdu"
             android:textColor="@color/red"
             android:textSize="12sp"
             android:layout_marginTop="4dp" />
 
+        <!-- Podrobnosti výjezdu -->
         <TextView
             android:id="@+id/note_content_preview"
             android:layout_width="wrap_content"
@@ -44,7 +67,17 @@
             android:textSize="14sp"
             android:layout_marginTop="4dp" />
 
+        <!-- Hodnocení zásahu -->
+        <RatingBar
+            android:id="@+id/noteRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:rating="0"
+            android:isIndicator="true" />
 
+        <!-- Tlačítka pro editaci a mazání -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

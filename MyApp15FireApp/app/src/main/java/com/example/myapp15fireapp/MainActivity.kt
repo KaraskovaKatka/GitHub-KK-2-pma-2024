@@ -1,6 +1,7 @@
 package com.example.myapp15fireapp
 
 import android.app.AlertDialog
+import android.app.DatePickerDialog
 import android.graphics.Color
 import android.os.Bundle
 import android.text.Spannable
@@ -9,14 +10,18 @@ import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Button
 import android.widget.EditText
+import android.widget.RatingBar
 import android.widget.Spinner
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapp15fireapp.databinding.ActivityMainBinding
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,9 +32,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var database: IncidentHubDatabase
     private var isSortedByEvent = false  // Pro řízení, zda řadit podle události
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
+
 
         title = "Výjezdy"
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -56,7 +62,14 @@ class MainActivity : AppCompatActivity() {
         val dialogView = layoutInflater.inflate(R.layout.dialog_add_note, null)
         val titleEditText = dialogView.findViewById<EditText>(R.id.editTextTitle)
         val contentEditText = dialogView.findViewById<EditText>(R.id.editTextContent)
+        val addressEditText = dialogView.findViewById<EditText>(R.id.editAdress) // Přidáno pole pro adresu
+        val dateEditText = dialogView.findViewById<EditText>(R.id.editTextDate) // Přidáno pole pro datum
         val spinnerCategory = dialogView.findViewById<Spinner>(R.id.spinnerCategory)
+        val ratingBar = dialogView.findViewById<RatingBar>(R.id.ratingBar) // Přidáno hodnocení
+
+        ratingBar.rating = 0f
+        ratingBar.stepSize = 0.5f
+        ratingBar.setIsIndicator(false)
 
         lifecycleScope.launch {
             val categories = database.categoryDao().getAllCategories().first()
@@ -65,21 +78,22 @@ class MainActivity : AppCompatActivity() {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             spinnerCategory.adapter = adapter
         }
-        val title = SpannableString("Přidat výjezd")
-        title.setSpan(ForegroundColorSpan(Color.RED), 0, title.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
 
         val dialog = AlertDialog.Builder(this)
-            .setTitle(title)
+            .setTitle("Přidat výjezd")
             .setView(dialogView)
             .setPositiveButton("Přidat") { _, _ ->
                 val title = titleEditText.text.toString()
                 val content = contentEditText.text.toString()
+                val address = addressEditText.text.toString() // Načtení adresy
+                val date = dateEditText.text.toString() // Načtení datumu
+                val rating = ratingBar.rating // Načtení hodnocení
                 val selectedCategory = spinnerCategory.selectedItem.toString()
 
                 lifecycleScope.launch {
                     val category = database.categoryDao().getCategoryByName(selectedCategory)
                     if (category != null) {
-                        addIncidentToDatabase(title, content, category.id)
+                        addIncidentToDatabase(title, content, address, date, rating, category.id)
                     }
                 }
             }
@@ -89,9 +103,16 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun addIncidentToDatabase(title: String, content: String, categoryId: Int) {
+    private fun addIncidentToDatabase(title: String, content: String, address: String, date: String, rating: Float, categoryId: Int) {
         lifecycleScope.launch {
-            val newIncident = Incident(title = title, content = content, categoryId = categoryId)
+            val newIncident = Incident(
+                title = title,
+                content = content,
+                location = address, // Přidání adresy do databáze
+                date = date, // Přidání datumu do databáze
+                rating = rating, // Přidání hodnocení
+                categoryId = categoryId
+            )
             database.incidentDao().insert(newIncident)
             loadIncidents()
         }
@@ -124,7 +145,13 @@ class MainActivity : AppCompatActivity() {
                 lifecycleScope = lifecycleScope,
                 database = database
             )
-            binding.recyclerView.adapter = incidentAdapter
+            binding.recyclerView.adapter = IncidentAdapter(
+                lifecycleScope = lifecycleScope, // Předání scope pro coroutines
+                database = database, // Předání instance databáze
+                incidents = incidents,
+                onDeleteClick = { incident -> deleteIncident(incident) },
+                onEditClick = { incident -> editIncident(incident) }
+            )
         }
     }
 
